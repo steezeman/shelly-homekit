@@ -244,6 +244,9 @@ void GarageDoorOpener::SetCurState(State new_state) {
     pre_stopped_state_ = cur_state_;
     obst_notify = true;
   }
+  if (new_state == State::kClosing) {
+    needs_to_pulse_ = true;
+  }
   cur_state_ = new_state;
   begin_ = mgos_uptime_micros();
   cur_state_char_->RaiseEvent();
@@ -386,6 +389,10 @@ void GarageDoorOpener::RunOnce() {
         break;
       }
       int64_t elapsed_ms = (mgos_uptime_micros() - begin_) / 1000;
+      if(needs_to_pulse_ && elapsed_ms > cfg_->pulse_time_ms * 3) {
+        needs_to_pulse_ = false;
+        out_close_->Pulse(true, cfg_->pulse_time_ms, out_src);
+      }
       if (elapsed_ms > cfg_->move_time_ms) {
         obstruction_detected_ = true;
         SetCurState(State::kStopped);

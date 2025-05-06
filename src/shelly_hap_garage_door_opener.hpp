@@ -83,6 +83,7 @@ class GarageDoorOpener : public Component, public mgos::hap::Service {
   mgos::hap::Characteristic *tgt_state_char_ = nullptr;
   mgos::hap::Characteristic *obst_char_ = nullptr;
 
+  bool needs_to_pulse_ = false;
   State cur_state_;
   State tgt_state_;
   State pre_stopped_state_;
