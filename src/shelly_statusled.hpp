@@ -42,7 +42,7 @@ class StatusLED : public Output {
   Status Pulse(bool on, int duration_ms, const char *source) override {
     return Status::UNIMPLEMENTED();
   };
-  void SetInvert(bool out_invert) override{};
+  void SetInvert(bool out_invert) override {};
   int pin() const;
 
  protected:

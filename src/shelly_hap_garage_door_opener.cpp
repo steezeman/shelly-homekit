@@ -389,7 +389,7 @@ void GarageDoorOpener::RunOnce() {
         break;
       }
       int64_t elapsed_ms = (mgos_uptime_micros() - begin_) / 1000;
-      if(needs_to_pulse_ && elapsed_ms > cfg_->pulse_time_ms * 3) {
+      if (needs_to_pulse_ && elapsed_ms > cfg_->pulse_time_ms * 3) {
         needs_to_pulse_ = false;
         out_close_->Pulse(true, cfg_->pulse_time_ms, "GDO:close");
       }
